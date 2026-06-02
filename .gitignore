@@ -1,0 +1,11 @@
+# Generated Xcode project (regenerate with `xcodegen generate`)
+ArpMIDI.xcodeproj/
+
+# Build output
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# macOS
+.DS_Store

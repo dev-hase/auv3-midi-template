@@ -1,0 +1,84 @@
+# XcodeGen project definition for the Arp AUv3 MIDI template.
+#
+# Run `xcodegen generate` (or `make project`) to produce ArpMIDI.xcodeproj.
+# XcodeGen is a build-time tool only — the shipped plugin has no dependencies.
+#
+# Four targets: a host app + an embedded Audio Unit app-extension per platform.
+# The extension targets share the same AU source (Shared/).
+
+name: ArpMIDI
+
+options:
+  bundleIdPrefix: com.example.arpmidi
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "15.0"
+    macOS: "13.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CLANG_CXX_LANGUAGE_STANDARD: "c++17"
+    CLANG_CXX_LIBRARY: "libc++"
+    GENERATE_INFOPLIST_FILE: NO
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    # Set your Apple Developer team here (or in Xcode) to run on a device:
+    # DEVELOPMENT_TEAM: ABCDE12345
+
+targets:
+
+  # ---------- iOS ----------
+  Arp-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - iOS/App
+    settings:
+      base:
+        PRODUCT_NAME: Arp
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.arpmidi
+        INFOPLIST_FILE: iOS/App/Info.plist
+    dependencies:
+      - target: ArpAU-iOS
+        embed: true
+
+  ArpAU-iOS:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Shared
+    settings:
+      base:
+        PRODUCT_NAME: ArpAU
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.arpmidi.ArpAU
+        INFOPLIST_FILE: iOS/Extension/Info.plist
+        SWIFT_OBJC_BRIDGING_HEADER: Shared/AudioUnit/Arp-Bridging-Header.h
+
+  # ---------- macOS ----------
+  Arp-macOS:
+    type: application
+    platform: macOS
+    sources:
+      - macOS/App
+    settings:
+      base:
+        PRODUCT_NAME: Arp
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.arpmidi
+        INFOPLIST_FILE: macOS/App/Info.plist
+    dependencies:
+      - target: ArpAU-macOS
+        embed: true
+
+  ArpAU-macOS:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Shared
+    settings:
+      base:
+        PRODUCT_NAME: ArpAU
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.arpmidi.ArpAU
+        INFOPLIST_FILE: macOS/Extension/Info.plist
+        SWIFT_OBJC_BRIDGING_HEADER: Shared/AudioUnit/Arp-Bridging-Header.h
