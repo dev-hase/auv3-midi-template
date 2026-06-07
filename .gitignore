@@ -1,11 +1,13 @@
-# Generated Xcode project (regenerate with `xcodegen generate`)
-ArpMIDI.xcodeproj/
+# Xcode user-specific state (the project itself IS tracked)
+ArpMIDI.xcodeproj/xcuserdata/
+ArpMIDI.xcodeproj/project.xcworkspace/xcuserdata/
+ArpMIDI.xcodeproj/project.xcworkspace/xcshareddata/
+*.xcuserstate
+xcuserdata/
 
 # Build output
 build/
 DerivedData/
-*.xcuserstate
-xcuserdata/
 
 # macOS
 .DS_Store

@@ -41,37 +41,33 @@ lives in the extension.
 
 ## Building
 
-The Xcode project is generated from `project.yml` with
-[XcodeGen](https://github.com/yonaskolb/XcodeGen) (a build-time tool only — it adds
-nothing to the shipped plugin). This keeps the repo free of an unreadable,
-merge-hostile `.pbxproj`.
+`ArpMIDI.xcodeproj` is checked in, so you can just open it — no tools required:
 
 ```bash
-brew install xcodegen      # one-time
-make open                  # generates ArpMIDI.xcodeproj and opens it in Xcode
-```
-
-or manually:
-
-```bash
-xcodegen generate
 open ArpMIDI.xcodeproj
 ```
 
-Then in Xcode pick a scheme:
+Then pick a scheme:
 
 - **Arp-iOS** → run on a device/simulator to install the iOS extension.
 - **Arp-macOS** → run to register the macOS extension.
 
-> Set your Apple Developer **Team** (Signing & Capabilities, or
-> `DEVELOPMENT_TEAM` in `project.yml`) to run on a physical iOS device.
+> Set your Apple Developer **Team** in *Signing & Capabilities* to run on a
+> physical iOS device. (macOS builds run locally with automatic signing.)
 
-### Don't want XcodeGen?
+### Regenerating the project (optional)
 
-Create a new Xcode **"Audio Unit Extension"** target (App + Extension) and drop
-the files under `Shared/` into the extension target, the `*/App/` files into the
-app target, and point each Info.plist build setting at the plists here. The
-source files — not the project file — are the durable part of this template.
+The project is also described by `project.yml` for
+[XcodeGen](https://github.com/yonaskolb/XcodeGen). If you add/rename files or
+targets, regenerating keeps the `.pbxproj` clean:
+
+```bash
+brew install xcodegen      # one-time
+make project               # == xcodegen generate
+```
+
+The checked-in `ArpMIDI.xcodeproj` and `project.yml` are kept in sync; either is
+a valid entry point.
 
 ---
 
